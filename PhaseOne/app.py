@@ -14,10 +14,10 @@ def store(key):
 
 		if json_data:
 			val = json_data['value']
-			if len(val) >= 50:
+			if len(key) > 16:
 				return json.dumps({"error":"Key is too long","message":"Error in PUT"}) +'\n', status.HTTP_400_BAD_REQUEST
 			else:
-				return str(val) + '\n'#myStore.insert(key, val)
+				return myStore.insert(key, val)
 		else:
 			return json.dumps({"error":"Value is missing","message":"Error in PUT"}) + '\n', status.HTTP_400_BAD_REQUEST
 
