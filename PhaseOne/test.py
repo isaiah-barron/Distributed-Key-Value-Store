@@ -70,6 +70,7 @@ for k,v in response.json().items():
 		print(f'Actual response from server: \n{response.json()}\n')
 		break
 
+#count how many tests were passed
 num = 0
 for passed in testStatus:
 	if passed == "passed":
