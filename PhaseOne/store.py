@@ -14,8 +14,7 @@ class Store():
 		#insert key/value parir into store
 		#will create a new entry or update existing key
 		Store.kv_store[key] = val
-
-		#to indicate which response to return to client 
+ 
 		if update:
 			return json.dumps({"message":"Updated successfully","replaced":True}) + '\n', status.HTTP_200_OK
 		else:
