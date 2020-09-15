@@ -27,4 +27,9 @@ class Store():
 		else:
 			return json.dumps({"doesExist":False,"error":"Key does not exist","message":"Error in GET"}) + '\n', status.HTTP_404_NOT_FOUND
 
-	# def delete(key):
+	def delete(key):
+		if key in Store.kv_store:
+			del Store.kv_store[key]
+			return json.dumps({"doesExist":True,"message":"Deleted successfully"}) + '\n', status.HTTP_200_OK
+		else:
+			return json.dumps({"doesExist":False,"error":"Key does not exist","message":"Error in DELETE"}) + '\n', status.HTTP_404_NOT_FOUND

@@ -13,7 +13,8 @@ def store(key):
 		return putRequest(key)
 	elif request.mehtod == 'GET':
 		return getRequest(key)
-	#elif request.mehtod == 'DELETE':
+	elif request.mehtod == 'DELETE':
+		return deleteRequest(key)
 
 
 def putRequest(key):
@@ -30,9 +31,8 @@ def putRequest(key):
 def getRequest(key):
 	return myStore.get(key)
 
-# def deleteRequest(key):
-	#if key exists, delete key and value from store, return 200 status code
-	#else return 404 error code
+def deleteRequest(key):
+	return myStore.delete(key)
 
 if __name__ == "__main__":
 	app.run(host='0.0.0.0', port=8081)
