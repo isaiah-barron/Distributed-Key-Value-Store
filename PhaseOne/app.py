@@ -8,14 +8,12 @@ myStore = Store()
 
 @app.route('/kv-store/<key>', methods=['GET', 'PUT', 'DELETE'])
 def store(key):
-
 	if request.method == 'PUT':
 		return putRequest(key)
 	elif request.mehtod == 'GET':
 		return getRequest(key)
 	elif request.mehtod == 'DELETE':
 		return deleteRequest(key)
-
 
 def putRequest(key):
 	json_data = request.get_json()
