@@ -10,9 +10,9 @@ myStore = Store()
 def store(key):
 	if request.method == 'PUT':
 		return putRequest(key)
-	elif request.mehtod == 'GET':
+	elif request.method == 'GET':
 		return getRequest(key)
-	elif request.mehtod == 'DELETE':
+	elif request.method == 'DELETE':
 		return deleteRequest(key)
 
 def putRequest(key):
