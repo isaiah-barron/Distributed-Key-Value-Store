@@ -81,7 +81,7 @@ print("\nTESTING DELETE REQUESTS...\n")
 #deleting an existing key/val pair
 print("--------Test5---------- \nTesting deleting an existing key/value pair in the store...\n\n")
 response = requests.delete(url+key, headers=header)
-expected = json.dumps({"doesExist":True,"message":"Deleted successfully"})
+expected = json.dumps({"doesExist":"True","message":"Deleted successfully"})
 
 for k,v in response.json().items():
 	if v:
@@ -96,7 +96,7 @@ for k,v in response.json().items():
 #delete a non-existing key/value pair
 print("--------Test6---------- \nTesting deleting a non-existing key/value pair in the store...\n\n")
 response = requests.delete(url+key, headers=header)
-expected = json.dumps({"doesExist":False,"error":"Key does not exist","message":"Error in DELETE"})
+expected = json.dumps({"doesExist":"False","error":"Key does not exist","message":"Error in DELETE"})
 
 for k,v in response.json().items():
 	if v == False:
@@ -110,41 +110,68 @@ for k,v in response.json().items():
 
 ############### GET request tests #########################
 
-# print("\nTESTING GET REQUESTS...\n")
+print("\nTESTING GET REQUESTS...\n")
 
-# #get existing key/value pair
-# print("--------Test7---------- \nTesting grabbing a existing key/value pair in the store...\n\n")
-# val = 'breathCat'
-# requests.put(url+key, headers=header, data=json.dumps({"value": val}))
-# response = requests.get(url+key, headers=header)
-# expected = json.dumps({"doesExist":True,"message":"Retrieved successfully","value":val})
+#get existing key/value pair
+print("--------Test7---------- \nTesting grabbing a existing key/value pair in the store...\n\n")
+val = 'breathCat'
+requests.put(url+key, headers=header, data=json.dumps({"value": val}))
+response = requests.get(url+key, headers=header)
+expected = json.dumps({"doesExist":"True","message":"Retrieved successfully","value":val})
+actual = response.json()
+failed = False
 
-# for k,v in response.json().items():
-# 	if v:
-# 		testStatus.append("passed")
-# 		break
-# 	else:
-# 		testStatus.append("failed")
-# 		print(f'Test failed......\nExpected response from server: \n{expected}\n')
-# 		print(f'Actual response from server: \n{response.json()}\n')
-# 		break
+if actual['doesExist']:
+	if actual['value'] == val:
+		testStatus.append('passed')
+	else:
+		failed = True
+		testStatus.append('failed')
+else:
+	failed = True
+	testStatus.append('failed')
 
-# #get existing key/value pair
-# print("--------Test8---------- \nTesting grabbing a existing key/value pair in the store...\n\n")
-# val = 'manbrainslice'
-# requests.put(url+key, headers=header, data=json.dumps({"value": val}))
-# response = requests.get(url+key, headers=header)
-# expected = json.dumps({"doesExist":True,"message":"Retrieved successfully","value":val})
-# response_data = response.json()
-# for k,v in response.json().items():
-# 	if v:
-# 		testStatus.append("passed")
-# 		break
-# 	else:
-# 		testStatus.append("failed")
-# 		print(f'Test failed......\nExpected response from server: \n{expected}\n')
-# 		print(f'Actual response from server: \n{response.json()}\n')
-# 		break
+if failed:
+	print(f'Test failed......\nExpected response from server: \n{expected}\n')
+	print(f'Actual response from server: \n{actual}\n')
+
+#get updated existing key/value pair
+print("--------Test8---------- \nTesting grabbing a updated existing key/value pair in the store...\n\n")
+val = 'manbrainslice'
+requests.put(url+key, headers=header, data=json.dumps({"value": val}))
+response = requests.get(url+key, headers=header)
+expected = json.dumps({"doesExist":"True","message":"Retrieved successfully","value":val})
+actual = response.json()
+failed = False
+
+if actual['doesExist']:
+	if actual['value'] == val:
+		testStatus.append('passed')
+	else:
+		failed = True
+		testStatus.append('failed')
+else:
+	failed = True
+	testStatus.append('failed')
+
+if failed:
+	print(f'Test failed......\nExpected response from server: \n{expected}\n')
+	print(f'Actual response from server: \n{actual}\n')
+
+#get a non-existing key/value pair
+print("--------Test9---------- \nTesting grabbing a non-existing key/value pair in the store...\n\n")
+key = 'donkeytail'
+response = requests.get(url+key, headers=header)
+expected = json.dumps({"doesExist":"False","error":"Key does not exist","message":"Error in GET"})
+actual = response.json()
+
+if actual['doesExist'] == False:
+	testStatus.append('passed')
+else:
+	testStatus.append('failed')
+	print(f'Test failed......\nExpected response from server: \n{expected}\n')
+	print(f'Actual response from server: \n{actual}\n')
+
 
 #count how many tests were passed
 num = 0
@@ -152,7 +179,6 @@ for passed in testStatus:
 	if passed == "passed":
 		num += 1
 
-print('-----------------------')
-print(f'\n\nTESTS PASSED {num}/{len(testStatus)}')
+print(f'\nTESTS PASSED {num}/{len(testStatus)}')
 
 
