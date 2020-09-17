@@ -23,7 +23,9 @@ To demonstrate proficient use of:
  - key/value pairs will be stored in memory (no persistant data)
  - build functionality to insert, update, delete, and get a value of an existing key
  - build funtionality to handle web requests (GET, PUT, DELETE)
- - Main and Forwarding roles for multi-site coordination. (This will prepare me for phase 2 where I will implement a basic distributed key/value store)
+ - Main instance and Forwarding instance roles for multi-site coordination. (This will prepare me for phase 2 where I will implement a basic distributed key/value store)
+     - Main instance will be the node that directly responds to the client
+     - Forwarding instance will be the node that acts as a proxy between the main instance        and the client
  
  ## Phase 2
  
