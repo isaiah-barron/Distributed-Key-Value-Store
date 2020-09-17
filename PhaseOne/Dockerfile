@@ -10,8 +10,11 @@ COPY . /app
 # Install any needed packages specified in requirements.txt
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
 
-# Make port 8081 available to the world outside this container
-EXPOSE 8081
+# Make port 13800 available to the world outside this container
+EXPOSE 13800
+
+# Define environmental variable
+ENV FORWARDING_ADDRESS=not_set
 
 # Run phase1.py when the container launches
 CMD ["python", "app.py"]

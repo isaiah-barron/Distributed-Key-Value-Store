@@ -1,10 +1,35 @@
 version: '3'
 services:
-  store:
+  main:
+    container_name: main-instance
     build: .
     ports:
-      - "8081:8081"
+      - "13800:13800"
     volumes:
       - .:/app #adds host directory to container directory
     environment:
-      FLASK_ENV: development #tells flask to reload the code on change
+      - FLASK_ENV=development #tells flask to reload the code on change
+    networks:
+      kv_subnet:
+        ipv4_address: 10.10.0.2
+
+  follower:
+    container_name: follower-instance
+    build: .
+    ports:
+      - "13801:13800"
+    volumes:
+      - .:/app
+    environment:
+      - FLASK_ENV=development
+      - FORWARDING_ADDRESS=10.10.0.2:13800
+    networks:
+      kv_subnet:
+        ipv4_address: 10.10.0.3
+
+networks:
+  kv_subnet:
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.10.0.0/16
