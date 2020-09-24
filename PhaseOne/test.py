@@ -1,7 +1,7 @@
 import requests
 import json
 
-url = 'http://127.0.0.1:8081/kv-store/'
+url = 'http://127.0.0.1:13800/kv-store/'
 key = 'sampleKey'
 val = 'sampleValue'
 header = {"Content-Type" : "application/json"}
@@ -172,6 +172,39 @@ else:
 	print(f'Test failed......\nExpected response from server: \n{expected}\n')
 	print(f'Actual response from server: \n{actual}\n')
 
+############### Main/Follower tests #########################
+
+# #test main instance with put request
+# print("--------Test10---------- \nTesting Main instance...\n\n")
+# requests.delete(url+key, headers=header)
+# response = requests.put(url+key, headers=header, data=json.dumps({"value": val}))
+# expected = json.dumps({"message":"Added successfully","replaced":"False"})
+# actual = response.json()
+
+# if actual['message'] == "Added successfully":
+# 	print(response.raw._connection.sock.socket.getsockname())
+# 	testStatus.append('passed')
+# else:
+# 	testStatus.append('failed')
+# 	print(f'Test failed......\nExpected response from server: \n{expected}\n')
+# 	print(f'Actual response from server: \n{actual}\n')
+
+# #test follower instance with put request
+# print("--------Test11---------- \nTesting follower instance...\n\n")
+# val ='sammyhammyjammy'
+# url = 'http://127.0.0.1:13801/kv-store/' #send request to follower
+
+# response = requests.put(url+key, headers=header, data=json.dumps({"value": val}))
+# expected = json.dumps({"message":"Updated successfully","replaced":"True"})
+# actual = response.json()
+
+# if actual['message'] == "Updated successfully":
+# 	print(response.raw._connection.sock.socket.getsockname())
+# 	testStatus.append('passed')
+# else:
+# 	testStatus.append('failed')
+# 	print(f'Test failed......\nExpected response from server: \n{expected}\n')
+# 	print(f'Actual response from server: \n{actual}\n')
 
 #count how many tests were passed
 num = 0
