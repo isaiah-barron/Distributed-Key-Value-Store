@@ -35,7 +35,7 @@ def store(key):
 			elif request.method == 'PUT':
 				err = json.dumps({"error":"Main instance is down","message":"Error in PUT"})
 			elif request.method == 'DELETE':
-				err = err = json.dumps({"error":"Main instance is down","message":"Error in DELETE"})
+				err = json.dumps({"error":"Main instance is down","message":"Error in DELETE"})
 
 			return err + '\n', status.HTTP_503_SERVICE_UNAVAILABLE
 		else:
