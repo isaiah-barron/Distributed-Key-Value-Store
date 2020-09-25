@@ -159,36 +159,49 @@ else:
 print("--------Test10---------- \nTesting Main instance...\n\n")
 
 requests.delete(url+key, headers=header)
-response = requests.put(url+key, headers=header, data=json.dumps({"value": val}), stream=True)
-ip, port = response.raw._fp.fp.raw._sock.getpeername() #grab port of the server that responded
-actual = response.json()
-expected = json.dumps({"message":"Added successfully","replaced":"False"})
 
-#check if key was added successfully and the main instance responded to the client
-if str(port) == '13800' and actual['message'] == "Added successfully":
-	testStatus.append('passed')
-else:
+rsp = requests.put(url+key, headers=header, data=json.dumps({"value": val}), stream=True)
+
+try:
+	ip, port = rsp.raw._fp.fp.raw._sock.getpeername() #grab port of the server that responded
+except AttributeError as error:
 	testStatus.append('failed')
-	print(f'Test failed......\nExpected response from server: \n{expected}\n with port 13800' )
-	print(f'Actual response from server: \n{actual}\n with port {port}')
+	print(f'Test failed with error {error}')
+else:
+	actual = rsp.json()
+	expected = json.dumps({"message":"Added successfully","replaced":"False"})
 
-# #test follower instance with put request
-# print("--------Test11---------- \nTesting follower instance...\n\n")
+	#check if key was added successfully and the main instance responded to the client
+	if str(port) == '13800' and actual['message'] == "Added successfully":
+		testStatus.append('passed')
+	else:
+		testStatus.append('failed')
+		print(f'Test failed......\nExpected response from server: \n{expected}\n with port 13800' )
+		print(f'Actual response from server: \n{actual}\n with port {port}')
 
-# val ='sammyhammyjammy'
-# url = 'http://127.0.0.1:13801/kv-store/' #send request to follower
-# rsp = requests.put(url+key, headers=header, data=json.dumps({"value": val}))
-# ip, port = rsp.raw._fp.fp.raw._sock.getpeername() #grab port of the server that responded
-# actual = rsp.json()
-# expected = json.dumps({"message":"Updated successfully","replaced":"True"})
+#test follower instance with put request
+print("--------Test11---------- \nTesting follower instance...\n\n")
 
-# #check if key was added successfully and the main instance responded to the client
-# if str(port) == '13801' and actual['message'] == "Updated successfully":
-# 	testStatus.append('passed')
-# else:
-# 	testStatus.append('failed')
-# 	print(f'Test failed......\nExpected response from server: \n{expected}\n with port 13800' )
-# 	print(f'Actual response from server: \n{actual}\n with port {port}')
+val ='sammyhammyjammy'
+url = 'http://127.0.0.1:13801/kv-store/' #send request to follower
+rsp = requests.put(url+key, headers=header, data=json.dumps({"value": val}), stream=True)
+
+try:
+	ip, port = rsp.raw._fp.fp.raw._sock.getpeername() #grab port of the server that responded
+except AttributeError as error:
+	testStatus.append('failed')
+	print(f'Test failed with error...\n {error}')
+else:
+	actual = rsp.json()
+	expected = json.dumps({"message":"Updated successfully","replaced":"True"})
+
+	#check if key was added successfully and the follower instance forward the response to the client
+	if str(port) == '13801' and actual['message'] == "Updated successfully":
+		testStatus.append('passed')
+	else:
+		testStatus.append('failed')
+		print(f'Test failed......\nExpected response from server: \n{expected}\n with port 13801')
+		print(f'Actual response from server: \n{actual}\n with port {port}')
 
 #count how many tests were passed
 num = 0
