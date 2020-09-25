@@ -30,7 +30,7 @@ To demonstrate proficient use of:
  ## Phase 2
  
  This phase will focus on creating a distributed key/value store that stores key/value pairs on more than one machine/node by partitioning the key-value pairs into shards.
- This achieves scalability in our key/value store. 
+ This will achieve scalability in our key/value store. 
  
  Phase 2 deliverables:
  
@@ -38,6 +38,7 @@ To demonstrate proficient use of:
  - partition key-value pairs into shards where each node holds one shard (no replication, that will come in Phase 3)
  - The size of the shards (the count of key-value pairs in the shard) will be equal in size if and only if the number of key-value pairs are even
  - the ability to see how many key-value pairs are stored on a node
- - the ability to add new nodes and re-partition the key-value store into new shards or reshard (the key-value store will not reshard automatically)
+ - the ability to add new nodes (view change) and re-partition the key-value store into new shards (reshard) 
+        - note: the key-value store will not reshard automatically
  
  ## Phase 3 (coming soon)
