@@ -12,15 +12,22 @@ myStore = Store()
 def store(key):
 	forwarding = os.environ.get('FORWARDING_ADDRESS')
 
-	if forwarding == 'not_set': #client directly sent the request to the main instance
+	# if the clients request was sent to the 
+	# main instance, then main instance directly
+	# responds to client
+	# else, if the clients request was sent to the 
+	# follower instance, then the follower forwards 
+	# the request to main and main responds to follower
+	# who then forwards it to the client
+	if forwarding == 'not_set': 
 		if request.method == 'PUT':
 			return putRequest(key)
 		elif request.method == 'GET':
 			return getRequest(key)
 		elif request.method == 'DELETE':
 			return deleteRequest(key)
-	
-	else: #client directly sent the request to the follower instance
+	else: 
+		#main instance url
 		main_url = "http://" + forwarding + "/kv-store/" + key
 
 		#forward the request to the main instance
