@@ -23,7 +23,7 @@ To demonstrate proficient use of:
  - key/value pairs will be stored in memory (no persistant data)
  - build functionality to insert, update, delete, and get a value of an existing key
  - build funtionality to handle web requests (GET, PUT, DELETE)
- - Main instance and Follower instance roles for multi-site coordination. (This will prepare me for phase 2 where I will implement a basic distributed key/value store)
+ - Main instance and Follower instance roles for multi-site coordination. (This will prepare me for phase 2 where I will implement a partitioning mechanism into my Distributed Key-Value Store)
      - Main instance will be the node that directly responds to the client
      - Follower instance will be the node that acts as a proxy between the main instance        and the client
  
@@ -38,7 +38,7 @@ To demonstrate proficient use of:
  - partition key-value pairs into shards where each node holds one shard (no replication, that will come in Phase 3)
  - The size of the shards (the count of key-value pairs in the shard) will be equal in size if and only if the number of key-value pairs are even
  - the ability to see how many key-value pairs are stored on a node
- - the ability to add new nodes (view change) and re-partition the key-value store into new shards (reshard) 
+ - the ability to add new nodes (view change) and re-partition the key-value pairs into new shards (reshard) 
     - note: the key-value store will not reshard automatically
  
  ## Phase 3 (coming soon)
