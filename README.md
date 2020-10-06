@@ -39,6 +39,6 @@ To demonstrate proficient use of:
  - The size of the shards (the count of key-value pairs in the shard) will be equal in size if and only if the number of key-value pairs are even
  - the ability to see how many key-value pairs are stored on a node
  - the ability to add new nodes (view change) and re-partition the key-value store into new shards (reshard) 
-        - note: the key-value store will not reshard automatically
+    - note: the key-value store will not reshard automatically
  
  ## Phase 3 (coming soon)
