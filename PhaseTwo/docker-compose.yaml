@@ -1,0 +1,38 @@
+version: '3'
+services:
+  node1:
+    container_name: node_1
+    build: .
+    ports:
+      - "13802:13800"
+    volumes:
+      - .:/app #adds host directory to container directory
+    environment:
+      - FLASK_ENV=development #tells flask to reload the code on change
+      - ADDRESS=10.10.0.2:13800
+      - VIEW=10.10.0.2:13800,10.10.0.3:13800
+    networks:
+      kv_subnet:
+        ipv4_address: 10.10.0.2
+
+  node2:
+    container_name: node_2
+    build: .
+    ports:
+      - "13803:13800"
+    volumes:
+      - .:/app
+    environment:
+      - FLASK_ENV=development
+      - ADDRESS=10.10.0.3:13800
+      - VIEW=10.10.0.2:13800,10.10.0.3:13800
+    networks:
+      kv_subnet:
+        ipv4_address: 10.10.0.3
+
+networks:
+  kv_subnet:
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.10.0.0/16
