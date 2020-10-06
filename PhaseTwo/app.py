@@ -28,7 +28,25 @@ def store(key):
 		elif request.method == 'DELETE':
 			return deleteRequest(key)
 	else: #key belongs on a different node (forward request to correct node)
-		return "belongs on different node"
+
+		#forward the request to the correct node
+		try:
+			node_url = f'http://{view[node]}/kv-store/keys/{key}'
+			resp = requests.request(method=request.method,
+									url=node_url,
+									headers=request.headers,
+									data=request.data, timeout=1)
+		except requests.exceptions.Timeout:
+			if request.method == 'GET':
+				err = json.dumps({"error":"Main instance is down","message":"Error in GET"})
+			elif request.method == 'PUT':
+				err = json.dumps({"error":"Main instance is down","message":"Error in PUT"})
+			elif request.method == 'DELETE':
+				err = json.dumps({"error":"Main instance is down","message":"Error in DELETE"})
+
+			return err + '\n', status.HTTP_503_SERVICE_UNAVAILABLE
+		else:
+			return resp.content, resp.status_code
 		
 def putRequest(key):
 	json_data = request.get_json()
@@ -48,11 +66,9 @@ def getRequest(key):
 def deleteRequest(key):
 	return myStore.delete(key)
 
-
 @app.route('/kv-store/key-count', methods=['GET'])
 def keyCouunt():
 	return myStore.size()
-
 
 # @app.route('/kv-store/view-change', methods=['PUT']
 
