@@ -29,8 +29,7 @@ To demonstrate proficient use of:
  
  ## Phase 2
  
- This phase will focus on creating a distributed key/value store that stores key/value pairs on more than one machine/node by partitioning the key-value pairs into shards.
- This will achieve scalability in our key/value store. 
+This phase will focus on creating a distributed key/value store that stores key/value pairs on more than one machine/node by partitioning the key-value pairs into shards (scalability). The partitioning mechanism I will be using is Hashing which allows for uniformity, cheap reads, cheap writes, and scalability. (In the future, once I have finished all three phases, I plan on using a Consistant Hashing. This mechanism allows for stability plus all the features that Hashing provides)
  
  Phase 2 deliverables:
  
